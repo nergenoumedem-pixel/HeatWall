@@ -14,7 +14,7 @@ simulate_wall_temp(
 )
 }
 \arguments{
-\item{materials}{A data frame defining material properties (thickness, condauctivity, density, specific_heat).}
+\item{materials}{A data frame defining material properties (thickness, conductivity, density, specific_heat).}
 
 \item{initial_temp_in}{Initial internal temperature (Celsius).}
 
@@ -31,4 +31,25 @@ A data frame with time and internal temperature values.
 }
 \description{
 Solves the 1D heat equation using a finite difference method for a composite wall structure.
+}
+\examples{
+# Example: A simple concrete wall
+concrete_data <- data.frame(
+  material = "Concrete",
+  thickness_m = 0.20,
+  conductivity_w_mk = 1.0,
+  density_kg_m3 = 2400,
+  specific_heat_j_kgk = 880
+)
+
+# Simulating for 24 hours with constant external temp
+results <- simulate_wall_temp(
+  materials = concrete_data,
+  initial_temp_in = 25,
+  external_temp = 35, # Typical Douala temp
+  total_time = 24,
+  dt = 0.01,
+  dx = 0.01
+)
+plot(results$Time, results$InternalTemp, type = 'l', main = "Internal Temperature Over Time")
 }
