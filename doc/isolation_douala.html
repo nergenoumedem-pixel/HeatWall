@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Noumedem" />
+
+<meta name="date" content="2025-12-12" />
+
+<title>Designing Energy-Efficient Walls for Douala using HeatWall</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Designing Energy-Efficient Walls for Douala
+using HeatWall</h1>
+<h4 class="author">Noumedem</h4>
+<h4 class="date">2025-12-12</h4>
+
+
+
+<div id="introduction-the-heat-problem-in-douala" class="section level1">
+<h1>1. Introduction: The Heat Problem in Douala</h1>
+<p>Douala’s climate demands effective thermal management in buildings to
+reduce reliance on expensive air conditioning. The <code>HeatWall</code>
+package provides tools to simulate and optimize building wall designs
+using the 1D heat equation.</p>
+</div>
+<div id="materials-used" class="section level1">
+<h1>2. Materials Used</h1>
+<p>We compare a standard concrete wall with a high-performance wall
+using Compressed Earth Bricks and Polyurethane insulation foam. We use
+the properties available in our package:</p>
+<table>
+<caption>Properties of materials used in the simulation</caption>
+<colgroup>
+<col width="26%" />
+<col width="13%" />
+<col width="20%" />
+<col width="16%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">material</th>
+<th align="right">thickness_m</th>
+<th align="right">conductivity_w_mk</th>
+<th align="right">density_kg_m3</th>
+<th align="right">specific_heat_j_kgk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Concrete</td>
+<td align="right">0.20</td>
+<td align="right">1.000</td>
+<td align="right">2400</td>
+<td align="right">880</td>
+</tr>
+<tr class="even">
+<td align="left">Polyurethane_Foam</td>
+<td align="right">0.05</td>
+<td align="right">0.025</td>
+<td align="right">30</td>
+<td align="right">1000</td>
+</tr>
+<tr class="odd">
+<td align="left">Compressed_Earth_Brick</td>
+<td align="right">0.15</td>
+<td align="right">0.400</td>
+<td align="right">1700</td>
+<td align="right">1000</td>
+</tr>
+</tbody>
+</table>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

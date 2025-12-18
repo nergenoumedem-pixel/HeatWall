@@ -1,0 +1,74 @@
+---
+title: "Designing Energy-Efficient Walls for Douala using HeatWall"
+author: "Noumedem"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Designing Energy-Efficient Walls for Douala}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# 1. Introduction: The Heat Problem in Douala
+
+Douala's climate demands effective thermal management in buildings to reduce reliance on expensive air conditioning. The `HeatWall` package provides tools to simulate and optimize building wall designs using the 1D heat equation.
+
+# 2. Materials Used
+
+We compare a standard concrete wall with a high-performance wall using Compressed Earth Bricks and Polyurethane insulation foam. We use the properties available in our package:
+
+```{r materials_table, echo=FALSE}
+library(HeatWall)
+# Display the material properties table cleanly
+knitr::kable(material_properties, caption = "Properties of materials used in the simulation")
+
+# --- SIMULATION SCRIPT ---
+
+# 1. Define wall scenarios
+mur_probleme <- material_properties[material_properties$material == "Concrete", ]
+mur_solution_isole <- rbind(
+  material_properties[material_properties$material == "Compressed_Earth_Brick", ],
+  material_properties[material_properties$material == "Polyurethane_Foam", ]
+)
+
+# 2. Simulation parameters
+temp_ext_douala <- 36 
+temp_int_initial <- 24
+temps_simulation_heures <- 48
+
+# 3. Execute simulations
+resultats_probleme <- simulate_wall_temp(
+  materials = mur_probleme,
+  initial_temp_in = temp_int_initial,
+  external_temp = temp_ext_douala,
+  total_time = temps_simulation_heures,
+  dt = 0.01,
+  dx = 0.01
+)
+resultats_probleme$Scenario <- "Mur Probleme (Béton Simple)"
+
+resultats_solution <- simulate_wall_temp(
+  materials = mur_solution_isole,
+  initial_temp_in = temp_int_initial,
+  external_temp = temp_ext_douala,
+  total_time = temps_simulation_heures,
+  dt = 0.01,
+  dx = 0.01
+)
+resultats_solution$Scenario <- "Mur Solution (Brique + PU)"
+
+# 4. Combine data and plot the graph with ggplot2
+donnees_finales <- rbind(resultats_probleme, resultats_solution)
+ggplot2::ggplot(donnees_finales, ggplot2::aes(x = Time, y = InternalTemp, color = Scenario)) +
+  ggplot2::geom_line(linewidth = 1.5) +
+  ggplot2::labs(
+    title = "Efficacité d'isolation (Brique de Terre + Polyuréthane) vs Béton",
+    subtitle = paste("Temperature Extérieure Constante:", temp_ext_douala, "°C"),
+    x = "Temps (Heures)",
+    y = "Température Intérieure (°C)",
+    color = "Configuration du Mur"
+  ) +
+  ggplot2::scale_color_manual(values = c("Mur Probleme (Béton Simple)" = "red", "Mur Solution (Brique + PU)" = "blue")) +
+  ggplot2::theme_minimal() +
+  ggplot2::geom_hline(yintercept = temp_ext_douala, linetype = "dashed", color = "green", linewidth = 0.8) +
+  ggplot2::annotate("text", x = 40, y = temp_ext_douala + 0.5, label = "T° Extérieure (36°C)", color = "green")

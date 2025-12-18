@@ -1,0 +1,103 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# HeatWall
+
+[![R build status](https://github.com/nergenoumedem-pixel/HeatWall/workflows/R-CMD-check/badge.svg)](https://github.com/nergenoumedem-pixel/HeatWall/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+HeatWall est un package R qui simule l’évolution de la température dans un mur multi-couches à l’aide de l’équation de la chaleur.
+Il permet d’évaluer l’efficacité thermique des matériaux avant la construction réelle.
+
+## Installation
+
+Installe la version de développement directement depuis GitHub avec devtools :
+
+``` r
+# Installer devtools si nécessaire
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+
+# Installer HeatWall depuis GitHub
+devtools::install_github("nergenoumedem-pixel/HeatWall")
+
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(HeatWall)
+
+## Exemple de données de matériaux
+concrete_data <- data.frame(
+  material = "Concrete",
+  thickness_m = 0.20,
+  conductivity_w_mk = 1.0,
+  density_kg_m3 = 2400,
+  specific_heat_j_kgk = 880
+)
+
+# Simulation de la température intérieure
+results <- simulate_wall_temp(
+  materials = concrete_data,
+  initial_temp_in = 25,        # Température intérieure initiale (°C)
+  external_temp = 35,          # Température extérieure (°C)
+  total_time = 24,             # Durée (heures)
+  dt = 0.01,
+  dx = 0.01
+)
+
+# Afficher la température simulée
+plot(
+  results$Time, results$InternalTemp, type = "l",
+  xlab = "Temps (heures)",
+  ylab = "Température intérieure (°C)",
+  main = "Évolution de la température intérieure"
+)
+
+```
+
+## Paramètres
+
+| Paramètre         | Description                                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `materials`       | Data frame décrivant les couches du mur : nom, épaisseur (m), conductivité (W/m·K), densité (kg/m³), capacité thermique (J/kg·K). |
+| `initial_temp_in` | Température intérieure initiale (°C).                                                                                             |
+| `external_temp`   | Température extérieure (constante ou vecteur).                                                                                    |
+| `total_time`      | Durée totale de la simulation (heures).                                                                                           |
+| `dt`              | Pas de temps (heures).                                                                                                            |
+| `dx`              | Pas d’espace (m), utilisé si une discrétisation spatiale est implémentée.                                                         |
+
+
+In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+
+## Résultat
+
+La fonction renvoie un data.frame contenant au moins :
+
+Time : Temps de simulation (heures).
+
+InternalTemp : Température intérieure simulée (°C).
+
+Tu peux étendre le résultat pour inclure des profils spatiaux ou des flux thermiques selon tes besoins.
+
+Licence
+
+Ce projet est distribué sous la licence MIT (voir fichier LICENSE dans le dépôt).
+

@@ -46,7 +46,7 @@ ggplot(donnees_finales, aes(x = Time, y = InternalTemp, color = Scenario)) +
   labs(
     title = "Efficacité d'isolation (Brique de Terre + Polyuréthane) vs Béton",
     subtitle = paste("Temperature Extérieure Constante:", temp_ext_douala, "°C"),
-    x = "Temps (Heures)",a
+    x = "Temps (Heures)",
     y = "Température Intérieure (°C)",
     color = "Configuration du Mur"
   ) +
